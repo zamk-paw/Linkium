@@ -31,4 +31,30 @@ Linkium keeps them organized in one place, making it easier to remember who’s 
 
 ---
 
+## 🚀 Installation
+
+This project comes with a **Docker Compose** setup to make it easy to run.
+
+1. Make sure you have **Docker** installed.
+2. Copy the environment example file:
+```bash
+cp .env.example .env
+```
+
+You can edit `.env` if you want to customize database credentials or other settings.
+
+3\. Start the containers:
+
+```bash
+docker-compose up --build
+```
+
+4. Open your browser at:
+
+```
+http://localhost
+```
+
+---
+
 *Linkium is an evolving project. Feedback and contributions are welcome!*
