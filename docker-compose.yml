@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  linkium-web:
+    image: nginx:latest
+    container_name: linkium-web
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - linkium-php
+
+  linkium-php:
+    build: docker/php-fpm
+    container_name: linkium-php
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - linkium-db
+    environment:
+      DB_HOST: linkium-db
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_USER: ${MYSQL_USER}
+      DB_PASS: ${MYSQL_PASSWORD}
+
+  linkium-db:
+    image: mariadb:10.11
+    container_name: linkium-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db_data:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+
