@@ -1,24 +1,52 @@
-<?php include 'app/views/layouts/header.php'; ?>
-<h2 class="text-2xl font-bold mb-4">Register</h2>
-<?php if (!empty($error)): ?>
-<p class="text-red-600 mb-2"><?= htmlspecialchars($error) ?></p>
-<?php endif; ?>
-<form action="/auth/register" method="POST" class="max-w-md mx-auto space-y-4">
-    <div>
-        <label class="block mb-1">Username</label>
-        <input type="text" name="username" class="w-full border p-2 rounded" required>
+<?php include 'app/views/layouts/auth_header.php'; ?>
+<div class="min-h-screen flex items-center justify-center bg-gray-950">
+    <div class="w-full max-w-md bg-gray-900 rounded-xl shadow-lg p-8">
+        <!-- Logo / Icon -->
+        <div class="flex justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 11c0-3 2-5 5-5s5 2 5 5c0 3-2 5-5 5s-5-2-5-5zM2 12c0-3 2-5 5-5s5 2 5 5c0 3-2 5-5 5s-5-2-5-5z" />
+            </svg>
+        </div>
+
+        <h1 class="text-2xl font-bold text-gray-100 text-center mb-6">Create your Linkium account</h1>
+
+        <?php if (!empty($error)): ?>
+            <div class="mb-4 bg-red-600/20 text-red-400 border border-red-500 rounded p-3 text-sm">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endif; ?>
+
+        <form action="/auth/register" method="POST" class="space-y-5">
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">Username</label>
+                <input type="text" name="username"
+                       class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:border-blue-500"
+                       placeholder="Your username" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                <input type="email" name="email"
+                       class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:border-blue-500"
+                       placeholder="you@example.com" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                <input type="password" name="password"
+                       class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:border-blue-500"
+                       placeholder="••••••••" required>
+            </div>
+
+            <button type="submit"
+                    class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg transition-colors">
+                Create Account
+            </button>
+
+            <p class="text-center text-sm text-gray-400 mt-4">
+                Already have an account?
+                <a href="/auth/login" class="text-blue-400 hover:underline">Sign in</a>
+            </p>
+        </form>
     </div>
-    <div>
-        <label class="block mb-1">Email</label>
-        <input type="email" name="email" class="w-full border p-2 rounded" required>
-    </div>
-    <div>
-        <label class="block mb-1">Password</label>
-        <input type="password" name="password" class="w-full border p-2 rounded" required>
-    </div>
-    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Create Account</button>
-    <p class="mt-2 text-sm">
-        Already have an account? <a class="text-blue-600" href="/auth/login">Login</a>
-    </p>
-</form>
-<?php include 'app/views/layouts/footer.php'; ?>
+</div>
+<?php include 'app/views/layouts/auth_footer.php'; ?>
