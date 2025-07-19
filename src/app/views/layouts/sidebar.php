@@ -7,8 +7,11 @@
            class="block p-2 rounded hover:bg-blue-600 transition">🏠 Dashboard</a>
         <a href="/dashboard/contacts"
            class="block p-2 rounded hover:bg-blue-600 transition">📒 Contacts</a>
-        <!-- plus tard : entités, stats, etc -->
-    </nav>
+	<a href="/dashboard/addContact" class="flex items-center p-2 hover:bg-blue-600 rounded transition">
+  ➕ Add Contact
+</a>
+    
+</nav>
     <div class="p-4 border-t border-blue-600">
         <a href="/auth/logout"
            class="block p-2 rounded hover:bg-blue-600 transition">🚪 Logout</a>
