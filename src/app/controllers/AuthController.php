@@ -10,12 +10,13 @@ class AuthController {
 
             if ($email && $password) {
                 $user = User::findByEmail($email);
-                if ($user && password_verify($password, $user['password_hash'])) {
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['username'] = $user['username'];
-                    header('Location: /index.php?controller=dashboard&action=index');
-                    exit;
-                } else {
+	    	if ($user && password_verify($password, $user['password_hash'])) {
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['username'] = $user['username'];
+    header('Location: /dashboard/home');
+    exit;
+
+	    } else {
                     $error = "Invalid email or password.";
                 }
             } else {
@@ -36,7 +37,7 @@ class AuthController {
                     $error = "Email already in use.";
                 } else {
                     if (User::create($username, $email, $password)) {
-                        header('Location: /index.php?controller=auth&action=login');
+                        header('Location: /auth/login');
                         exit;
                     } else {
                         $error = "Registration failed.";
@@ -51,7 +52,7 @@ class AuthController {
 
     public function logout(): void {
         session_destroy();
-        header('Location: /index.php?controller=auth&action=login');
+        header('Location: /auth/login');
         exit;
     }
 }

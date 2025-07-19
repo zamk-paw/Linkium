@@ -43,4 +43,23 @@ class Contact {
         }
         return $contacts;
     }
+
+    public static function allByUser(int $userId): array {
+    $pdo = Database::getInstance();
+    $stmt = $pdo->prepare("SELECT id, first_name, last_name, email_personal, email_professional FROM contacts WHERE user_id = ?");
+    $stmt->execute([$userId]);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $contacts = [];
+    foreach ($rows as $row) {
+        $contacts[] = new Contact(
+            $row['id'],
+            $row['first_name'],
+            $row['last_name'],
+            $row['email_personal'],
+            $row['email_professional']
+        );
+    }
+    return $contacts;
+}
+
 }

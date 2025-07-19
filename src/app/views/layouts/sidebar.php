@@ -1,9 +1,17 @@
-<aside class="w-64 bg-gray-800 text-white h-screen p-4 fixed">
-    <h2 class="text-2xl font-bold mb-6">Linkium</h2>
-    <nav class="space-y-2">
-        <a href="/index.php?controller=dashboard&action=index" class="block p-2 rounded hover:bg-gray-700">🏠 Dashboard</a>
-        <a href="/index.php?controller=contact&action=index" class="block p-2 rounded hover:bg-gray-700">📒 Contacts</a>
+<aside class="fixed top-0 left-0 w-64 h-screen bg-blue-700 text-white flex flex-col">
+    <div class="p-4 text-2xl font-bold border-b border-blue-600">
+        Linkium
+    </div>
+    <nav class="flex-1 p-4 space-y-2">
+        <a href="/dashboard/home"
+           class="block p-2 rounded hover:bg-blue-600 transition">🏠 Dashboard</a>
+        <a href="/dashboard/contacts"
+           class="block p-2 rounded hover:bg-blue-600 transition">📒 Contacts</a>
         <!-- plus tard : entités, stats, etc -->
-        <a href="/index.php?controller=auth&action=logout" class="block p-2 rounded hover:bg-gray-700">🚪 Logout</a>
     </nav>
+    <div class="p-4 border-t border-blue-600">
+        <a href="/auth/logout"
+           class="block p-2 rounded hover:bg-blue-600 transition">🚪 Logout</a>
+    </div>
 </aside>
+

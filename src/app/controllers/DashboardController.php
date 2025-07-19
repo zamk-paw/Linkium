@@ -1,9 +1,19 @@
 <?php
 require_once 'app/controllers/BaseController.php';
+require_once 'app/models/Contact.php';
 
 class DashboardController extends BaseController {
-    public function index(): void {
-        $this->requireLogin(); // check session
-        include 'app/views/dashboard/index.php';
+
+    public function home(): void {
+        $this->requireLogin();
+        include 'app/views/dashboard/home.php';
+    }
+
+    public function contacts(): void {
+        $this->requireLogin();
+
+	$contacts = Contact::allByUser($_SESSION['user_id']);
+
+        include 'app/views/dashboard/contacts.php';
     }
 }
