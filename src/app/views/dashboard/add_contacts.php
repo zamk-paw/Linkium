@@ -6,7 +6,7 @@
       <!-- Header -->
       <div class="flex items-center justify-between mb-8">
         <h1 class="text-3xl font-bold">Add a New Contact</h1>
-        <a href="/dashboard/contacts"
+        <a href="/Contacts/contacts"
            class="inline-flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-200 text-sm font-medium rounded-lg shadow">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -20,7 +20,7 @@
         </div>
       <?php endif; ?>
 
-      <form action="/dashboard/storeContact" method="POST" class="space-y-8">
+      <form action="/Contacts/storeContacts" method="POST" class="space-y-8">
 
         <!-- Basic Information -->
         <div class="bg-gray-900 rounded-lg border border-gray-800 p-6 space-y-4 shadow">
@@ -56,9 +56,9 @@
           </div>
         </div>
 
-        <!-- Contact Info -->
+        <!-- Contacts Info -->
         <div class="bg-gray-900 rounded-lg border border-gray-800 p-6 space-y-4 shadow">
-          <h2 class="text-xl font-semibold text-blue-300 mb-2">Contact Info</h2>
+          <h2 class="text-xl font-semibold text-blue-300 mb-2">Contacts Info</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium mb-1">Email Personal</label>

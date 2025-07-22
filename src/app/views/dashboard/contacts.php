@@ -10,31 +10,32 @@
              class="w-full px-3 py-2 rounded-md bg-gray-800 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-500">
     </div>
     <ul id="contactList" class="flex-1 overflow-y-auto divide-y divide-gray-800">
-      <?php foreach($contacts as $contact): ?>
+      <?php foreach($contacts as $Contacts): ?>
         <li class="cursor-pointer hover:bg-gray-800 px-4 py-3"
-            data-fullname="<?= htmlspecialchars($contact->getFullName()) ?>"
-            data-nickname="<?= htmlspecialchars($contact->getNickname() ?? '') ?>"
-            data-description="<?= htmlspecialchars($contact->getDescription() ?? '') ?>"
-            data-tags="<?= htmlspecialchars($contact->getTags() ?? '') ?>"
-            data-email="<?= htmlspecialchars($contact->getEmailPersonal() ?? '') ?>"
-            data-emailpro="<?= htmlspecialchars($contact->getEmailProfessional() ?? '') ?>"
-            data-phonepersonal="<?= htmlspecialchars($contact->getPhonePersonal() ?? '') ?>"
-            data-phonepro="<?= htmlspecialchars($contact->getPhoneProfessional() ?? '') ?>"
-            data-linkedin="<?= htmlspecialchars($contact->getLinkedinUrl() ?? '') ?>"
-            data-github="<?= htmlspecialchars($contact->getGithubUrl() ?? '') ?>"
-            data-company="<?= htmlspecialchars($contact->getCompany() ?? '') ?>"
-            data-position="<?= htmlspecialchars($contact->getPosition() ?? '') ?>"
-            data-address="<?= htmlspecialchars($contact->getAddress() ?? '') ?>"
-            data-birthday="<?= htmlspecialchars($contact->getBirthday() ?? '') ?>"
-            data-website="<?= htmlspecialchars($contact->getWebsiteUrl() ?? '') ?>"
-            data-notes="<?= htmlspecialchars($contact->getNotes() ?? '') ?>"
-            data-source="<?= htmlspecialchars($contact->getSource() ?? '') ?>"
-            data-relationship="<?= htmlspecialchars($contact->getRelationship() ?? '') ?>">
-          <div class="font-medium text-gray-200"><?= htmlspecialchars($contact->getFullName()) ?></div>
-          <?php if ($contact->getEmailPersonal()): ?>
-            <div class="text-xs text-gray-400"><?= htmlspecialchars($contact->getEmailPersonal()) ?></div>
-          <?php elseif ($contact->getEmailProfessional()): ?>
-            <div class="text-xs text-gray-400"><?= htmlspecialchars($contact->getEmailProfessional()) ?></div>
+            data-id="<?= $Contacts->getId() ?>"
+            data-fullname="<?= htmlspecialchars($Contacts->getFullName()) ?>"
+            data-nickname="<?= htmlspecialchars($Contacts->getNickname() ?? '') ?>"
+            data-description="<?= htmlspecialchars($Contacts->getDescription() ?? '') ?>"
+            data-tags="<?= htmlspecialchars($Contacts->getTags() ?? '') ?>"
+            data-email="<?= htmlspecialchars($Contacts->getEmailPersonal() ?? '') ?>"
+            data-emailpro="<?= htmlspecialchars($Contacts->getEmailProfessional() ?? '') ?>"
+            data-phonepersonal="<?= htmlspecialchars($Contacts->getPhonePersonal() ?? '') ?>"
+            data-phonepro="<?= htmlspecialchars($Contacts->getPhoneProfessional() ?? '') ?>"
+            data-linkedin="<?= htmlspecialchars($Contacts->getLinkedinUrl() ?? '') ?>"
+            data-github="<?= htmlspecialchars($Contacts->getGithubUrl() ?? '') ?>"
+            data-company="<?= htmlspecialchars($Contacts->getCompany() ?? '') ?>"
+            data-position="<?= htmlspecialchars($Contacts->getPosition() ?? '') ?>"
+            data-address="<?= htmlspecialchars($Contacts->getAddress() ?? '') ?>"
+            data-birthday="<?= htmlspecialchars($Contacts->getBirthday() ?? '') ?>"
+            data-website="<?= htmlspecialchars($Contacts->getWebsiteUrl() ?? '') ?>"
+            data-notes="<?= htmlspecialchars($Contacts->getNotes() ?? '') ?>"
+            data-source="<?= htmlspecialchars($Contacts->getSource() ?? '') ?>"
+            data-relationship="<?= htmlspecialchars($Contacts->getRelationship() ?? '') ?>">
+          <div class="font-medium text-gray-200"><?= htmlspecialchars($Contacts->getFullName()) ?></div>
+          <?php if ($Contacts->getEmailPersonal()): ?>
+            <div class="text-xs text-gray-400"><?= htmlspecialchars($Contacts->getEmailPersonal()) ?></div>
+          <?php elseif ($Contacts->getEmailProfessional()): ?>
+            <div class="text-xs text-gray-400"><?= htmlspecialchars($Contacts->getEmailProfessional()) ?></div>
           <?php endif; ?>
         </li>
       <?php endforeach; ?>
@@ -63,6 +64,17 @@ const detailsPanel = document.getElementById('contactDetails');
 contactItems.forEach(item => {
   item.addEventListener('click', () => {
     const d = item.dataset;
+
+    // Boutons d'action (delete)
+    const deleteButton = `
+      <button onclick="openDeleteModal('${d.id}', '${d.fullname}')"
+              class="ml-auto inline-flex items-center px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+        Delete
+      </button>
+    `;
 
     detailsPanel.innerHTML = `
       <div class="w-full max-w-4xl space-y-6">
@@ -121,17 +133,30 @@ contactItems.forEach(item => {
           ${d.source ? `<p class="text-sm text-gray-400">Source: ${d.source}</p>` : ""}
           ${d.relationship ? `<p class="text-sm text-gray-400">Relationship: ${d.relationship}</p>` : ""}
         </div>` : ""}
+        ${deleteButton}
+
       </div>
     `;
   });
 });
 
+function openDeleteModal(id, name) {
+  const actions = `
+    <button onclick="closeModal()" class="px-4 py-2 bg-gray-700 text-gray-200 rounded hover:bg-gray-600">Cancel</button>
+    <form method="POST" action="/contacts/delete" class="inline">
+      <input type="hidden" name="contact_id" value="${id}">
+      <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Delete</button>
+    </form>
+  `;
+  openModal('Delete Contact', `Are you sure you want to delete ${name}?`, actions);
+}
+
 function filterContacts() {
   const input = document.getElementById('searchInput').value.toLowerCase();
   const contacts = document.querySelectorAll('#contactList li');
-  contacts.forEach(contact => {
-    const text = contact.textContent.toLowerCase();
-    contact.style.display = text.includes(input) ? '' : 'none';
+  contacts.forEach(contacts => {
+    const text = Contacts.textContent.toLowerCase();
+    Contacts.style.display = text.includes(input) ? '' : 'none';
   });
 }
 </script>
