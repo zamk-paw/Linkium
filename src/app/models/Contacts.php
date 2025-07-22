@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../core/Database.php';
 
-class Contact {
+class Contacts {
     private int $id;
     private string $firstName;
     private string $lastName;
@@ -83,12 +83,12 @@ class Contact {
 
         $contacts = [];
         foreach ($rows as $row) {
-            $contacts[] = new Contact($row);
+            $contacts[] = new Contacts($row);
         }
         return $contacts;
     }
 
-    // Create contact (ta fonction actuelle)
+    // Create Contacts
     public static function create(array $data, int $userId): bool {
         $pdo = Database::getInstance();
 
@@ -124,4 +124,12 @@ class Contact {
             $relationship
         ]);
     }
+
+    // Delete Contacts
+    public static function delete(int $contactId, int $userId): bool {
+    $pdo = Database::getInstance();
+    $stmt = $pdo->prepare("DELETE FROM contacts WHERE id = ? AND user_id = ?");
+    return $stmt->execute([$contactId, $userId]);
+}
+
 }
